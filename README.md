@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# One Reel — AI Powered Creator Marketplace
+### 🔗 Live App: https://onereel.online
 
-## Getting Started
+A production two-sided marketplace connecting 
+video creators with editors — built with AI. 
+Designed and shipped entirely solo from zero 
+to live deployment.
 
-First, run the development server:
+---
+
+## 🤖 AI Features (Anthropic Claude API)
+
+- **Hook Script Generator** — generates 10 
+  viral hooks per niche per API call
+- **Thumbnail Concept Generator** — creates 
+  detailed visual briefs for creators
+- **Collaboration Brief Generator** — 
+  multi-prompt chain converts 4 user answers 
+  into a complete job post
+
+---
+
+## 🗄️ Database Architecture
+
+- 39-table PostgreSQL schema on Supabase
+- Covers users, collaborations, workspaces,
+  AI content, payments, reviews, notifications
+- Designed from scratch as solo developer
+
+---
+
+## ⚡ Platform Features
+
+- Real-time workspace messaging
+- 6-type notification system
+- Stripe subscription payments ($19/month Pro)
+- Luma Labs AI video generation pipeline
+- Cloudinary media storage (25GB)
+- NextAuth multi-role authentication
+- Creator, Editor, Both, Admin roles
+- Protected route middleware
+- Vercel production deployment
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14, React, TypeScript |
+| Styling | Tailwind CSS |
+| Database | Supabase, PostgreSQL |
+| AI Features | Anthropic Claude API |
+| Video AI | Luma Labs API |
+| Storage | Cloudinary |
+| Payments | Stripe |
+| Auth | NextAuth |
+| Deploy | Vercel |
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Add your environment variables:
