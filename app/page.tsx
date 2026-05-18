@@ -8,7 +8,7 @@ export default function HomePage() {
   const heroRef = useRef(null)
 
   useEffect(() => {
-    const handleMouse = (e) => {
+    const handleMouse = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
     }
     const handleScroll = () => setScrollY(window.scrollY)
