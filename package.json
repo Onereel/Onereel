@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-router build",
-    "typecheck": "react-router typegen && tsc --noEmit"
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "start": "react-router-serve ./build/server/index.js"
   },
   "dependencies": {
     "@auth/core": "^0.37.2",
