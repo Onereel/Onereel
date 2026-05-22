@@ -79,6 +79,7 @@
     "autoprefixer": "^10.5.0",
     "babel-plugin-react-require": "^4.0.3",
     "cross-env": "^10.1.0",
+    "esbuild": "^0.28.0",
     "fast-glob": "^3.3.3",
     "micromatch": "^4.0.8",
     "postcss": "^8.5.15",
