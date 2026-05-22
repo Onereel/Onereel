@@ -87,5 +87,14 @@
     "vite": "^6.3.3",
     "vite-plugin-babel": "^1.7.3",
     "vite-tsconfig-paths": "^6.1.1"
+  },
+  "imports": {
+    "@/*": "./src/*",
+    "@/auth": "./src/auth.js",
+    "@/app/*": "./src/app/*",
+    "@/lib/*": "./src/lib/*",
+    "@/components/*": "./src/components/*",
+    "@/utils/*": "./src/utils/*",
+    "@/hooks/*": "./src/hooks/*"
   }
 }
