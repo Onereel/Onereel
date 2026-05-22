@@ -2,25 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const esbuild = require('esbuild');
 
-async function transpileFile(srcPath, destPath) {
-  try {
-    const result = await esbuild.build({
-      entryPoints: [srcPath],
-      bundle: false,
-      platform: 'node',
-      format: 'esm',
-      target: 'node20',
-      loader: { '.js': 'jsx', '.jsx': 'jsx', '.ts': 'tsx', '.tsx': 'tsx' },
-      outfile: destPath,
-      logLevel: 'silent',
-    });
-    return true;
-  } catch (err) {
-    console.error('Failed:', srcPath);
-    return false;
-  }
-}
-
 async function walkDir(srcDir, destDir) {
   if (!fs.existsSync(srcDir)) return 0;
   fs.mkdirSync(destDir, { recursive: true });
@@ -31,30 +12,30 @@ async function walkDir(srcDir, destDir) {
     const destPath = path.join(destDir, item);
     if (fs.statSync(srcPath).isDirectory()) {
       count += await walkDir(srcPath, destPath);
-    } else if (item.endsWith('.js') || item.endsWith('.jsx') || item.endsWith('.ts') || item.endsWith('.tsx')) {
+    } else if (/\.(js|jsx|ts|tsx)$/.test(item)) {
       const outPath = destPath.replace(/\.(jsx|ts|tsx)$/, '.js');
-      if (await transpileFile(srcPath, outPath)) count++;
-    } else {
-      fs.copyFileSync(srcPath, destPath);
+      try {
+        await esbuild.build({
+          entryPoints: [srcPath],
+          bundle: true,
+          platform: 'node',
+          format: 'esm',
+          target: 'node20',
+          packages: 'external',
+          loader: { '.js': 'jsx' },
+          outfile: outPath,
+          logLevel: 'silent',
+        });
+        count++;
+      } catch (err) {
+        console.error('Skip:', srcPath, err.message);
+      }
     }
   }
   return count;
 }
 
 (async () => {
-  // Transpile API routes
   const apiCount = await walkDir('src/app/api', 'build/server/src/app/api');
-  console.log('Transpiled', apiCount, 'API files');
-  
-  // Transpile auth, lib, components, utils, hooks
-  for (const folder of ['lib', 'components', 'utils', 'hooks']) {
-    const count = await walkDir(`src/${folder}`, `build/server/src/${folder}`);
-    console.log('Transpiled', count, folder, 'files');
-  }
-  
-  // Copy auth.js separately
-  if (fs.existsSync('src/auth.js')) {
-    await transpileFile('src/auth.js', 'build/server/src/auth.js');
-    console.log('Transpiled auth.js');
-  }
+  console.log('Bundled', apiCount, 'API files');
 })();
