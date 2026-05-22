@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-router build",
+    "build": "react-router build && node copy-api-routes.cjs",
     "typecheck": "react-router typegen && tsc --noEmit",
     "start": "react-router-serve ./build/server/index.js"
   },
