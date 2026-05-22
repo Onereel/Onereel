@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build && node copy-api-routes.cjs",
+    "build": "react-router build && node copy-api-routes.cjs && node fix-aliases.cjs",
     "typecheck": "react-router typegen && tsc --noEmit",
     "start": "react-router-serve ./build/server/index.js"
   },
