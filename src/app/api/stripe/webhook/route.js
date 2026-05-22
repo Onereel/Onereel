@@ -1,7 +1,10 @@
 import sql from "@/app/api/utils/sql";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) throw new Error("Stripe not configured");
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
 
 /**
  * ═══════════════════════════════════════════════════════════════════════
@@ -18,7 +21,7 @@ export async function POST(request) {
 
   try {
     const body = await request.text();
-    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+    event = getStripe().webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
     console.error(
       `[Stripe Webhook] Signature verification failed:`,

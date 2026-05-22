@@ -2,7 +2,10 @@ import { auth } from "@/lib/safe-auth";
 import sql from "@/app/api/utils/sql";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) throw new Error("Stripe not configured");
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
 
 /**
  * ═══════════════════════════════════════════════════════════════════════
@@ -54,7 +57,7 @@ export async function POST(request) {
     let customerId = profile.stripe_customer_id;
 
     if (!customerId) {
-      const customer = await stripe.customers.create({
+      const customer = await getStripe().customers.create({
         email: session.user.email,
         metadata: {
           profile_id: profile.id.toString(),
@@ -102,7 +105,7 @@ export async function POST(request) {
     }
 
     // Create checkout session
-    const checkoutSession = await stripe.checkout.sessions.create({
+    const checkoutSession = await getStripe().checkout.sessions.create({
       customer: customerId,
       payment_method_types: ["card"],
       line_items: [

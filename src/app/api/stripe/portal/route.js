@@ -2,7 +2,10 @@ import { auth } from "@/lib/safe-auth";
 import sql from "@/app/api/utils/sql";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) throw new Error("Stripe not configured");
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
 
 /**
  * ═══════════════════════════════════════════════════════════════════════
@@ -47,7 +50,7 @@ export async function POST(request) {
     }
 
     // Create portal session
-    const portalSession = await stripe.billingPortal.sessions.create({
+    const portalSession = await getStripe().billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
       return_url: `${process.env.APP_URL}/dashboard`,
     });
